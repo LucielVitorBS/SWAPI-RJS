@@ -1,0 +1,17 @@
+.detailsContent{
+    width: 100%;
+}
+
+.detailsContent table{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.detailsContent table tr{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
