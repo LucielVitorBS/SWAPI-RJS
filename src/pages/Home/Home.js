@@ -24,7 +24,6 @@ export default function Home({ history }){
         history.push(`/details/${id}`);
     }
 
-
     useEffect(() =>{
         async function loadList(){
             const response = await api.get(`/people/?page=${page}`);
