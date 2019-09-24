@@ -3,7 +3,7 @@ import api from '../services/api';
 
 import './Home.css'
 
-export default function Home(){
+export default function Home({ history }){
     const [ data, setData] = useState([]);
     const [ list, setList ] = useState([]);
     const [ page, setPage ] = useState(1);
@@ -14,13 +14,23 @@ export default function Home(){
     function previousPage(){
         setPage(page-1);
     }
+    function parseUrl(url){
+        const id = url.substr(28);
+        return id
+    }
+    function handlePerson(e, url){
+        e.preventDefault();
+        const id = parseUrl(url);
+        history.push(`/details/${id}`);
+    }
+
 
     useEffect(() =>{
         async function loadList(){
             const response = await api.get(`/people/?page=${page}`);
 
             setData(response.data); 
-            setList(response.data.results)           
+            setList(response.data.results);           
         }
         loadList();
     }, [page])
@@ -31,7 +41,7 @@ export default function Home(){
                 list.map((people, index) =>{
                     return(
                         <li key= { index }>
-                            <button>{people.name}</button>
+                            <button onClick= { (e) => handlePerson(e, people.url) }>{people.name}</button>
                         </li>
                     )
                 })
@@ -41,13 +51,13 @@ export default function Home(){
                 {
                     data.previous === null
                     ? <button onClick={ nextPage }>Próximo</button>
-                    :
-                        data.next === null 
+                    : data.next === null 
                         ? <button onClick={ previousPage }>Anterior</button>
-                        : <>
-                            <button onClick={ previousPage }>Anterior</button>
-                            <button onClick={ nextPage }>Próximo</button>
-                        </>
+                        :
+                            <>
+                                <button onClick={ previousPage }>Anterior</button>
+                                <button onClick={ nextPage }>Próximo</button>
+                            </>
                 }
             </div>
         </div>
