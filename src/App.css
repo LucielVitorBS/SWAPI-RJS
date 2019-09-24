@@ -12,6 +12,7 @@ body, input, button{
 body{
   background-color: black;
   color: white;
+  text-align: center;
 }
 
 button{
